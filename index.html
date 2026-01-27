@@ -198,9 +198,13 @@ function diminuir(nome) {
 
 function addComQtd(nome, preco) {
   let qtd = quantidades[nome] || 1;
-  carrinho[nome] = carrinho[nome]
-    ? { preco, qtd: carrinho[nome].qtd + qtd }
-    : { preco, qtd };
+
+  if (!carrinho[nome]) {
+    carrinho[nome] = { preco, qtd };
+  } else {
+    carrinho[nome].qtd += qtd;
+  }
+
   quantidades[nome] = 1;
   document.getElementById("qtd-" + nome).innerText = 1;
   render();
@@ -210,12 +214,35 @@ function render() {
   let lista = document.getElementById("lista");
   lista.innerHTML = "";
   total = 0;
+
   for (let item in carrinho) {
     let sub = carrinho[item].preco * carrinho[item].qtd;
     total += sub;
-    lista.innerHTML += `<li>${item} (${carrinho[item].qtd}x) - R$ ${sub}</li>`;
+
+    lista.innerHTML += `
+      <li style="margin-bottom:8px">
+        <strong>${item}</strong><br>
+        <button onclick="alterarQtd('${item}', -1)">−</button>
+        ${carrinho[item].qtd}
+        <button onclick="alterarQtd('${item}', 1)">+</button>
+        <button onclick="removerItem('${item}')">🗑️</button>
+        <br>R$ ${sub}
+      </li>
+    `;
   }
+
   document.getElementById("total").innerText = total;
+}
+
+function alterarQtd(nome, delta) {
+  carrinho[nome].qtd += delta;
+  if (carrinho[nome].qtd <= 0) delete carrinho[nome];
+  render();
+}
+
+function removerItem(nome) {
+  delete carrinho[nome];
+  render();
 }
 
 function enviar() {
@@ -231,7 +258,6 @@ function enviar() {
   }
 
   msg += `\nTotal: R$ ${total}`;
-
   window.open("https://wa.me/5534999060948?text=" + encodeURIComponent(msg));
 }
 </script>
