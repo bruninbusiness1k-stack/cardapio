@@ -11,29 +11,35 @@ body {
   background: #f5f5f5;
   margin: 0;
 }
+
 header {
   background: #d32f2f;
   color: white;
   padding: 20px;
   text-align: center;
 }
+
 .container {
   padding: 15px;
 }
+
 .produto {
   background: white;
   margin-bottom: 15px;
   border-radius: 10px;
   overflow: hidden;
 }
+
 .produto img {
   width: 100%;
   height: 180px;
   object-fit: cover;
 }
+
 .info {
   padding: 10px;
 }
+
 button {
   background: #d32f2f;
   color: white;
@@ -41,12 +47,14 @@ button {
   padding: 8px 12px;
   border-radius: 5px;
 }
+
 .qtd {
   display: flex;
   align-items: center;
   gap: 10px;
   margin: 8px 0;
 }
+
 .qtd button {
   width: 30px;
   height: 30px;
@@ -54,16 +62,20 @@ button {
   background: #ddd;
   color: #000;
 }
+
 .carrinho {
   background: white;
   padding: 10px;
   border-radius: 5px;
+  margin-top: 15px;
 }
+
 input, select, textarea {
   width: 100%;
   padding: 8px;
   margin-bottom: 8px;
 }
+
 .finalizar {
   width: 100%;
   padding: 12px;
@@ -78,53 +90,84 @@ input, select, textarea {
 
 <header>
   <h1>HAMBURGUERIA ORIGINAL BURGUER</h1>
-  <p>Faça seu pedido online</p>
+  <p>
+    Faça seu pedido online <br>
+    Horário de funcionamento: 18:00 às 23:00 <br>
+    Escolha seu lanche, coloque no carrinho, <br>
+    preencha as informações e nos mande no WhatsApp
+  </p>
 </header>
 
 <div class="container">
 
+<!-- X-BURGER -->
 <div class="produto">
   <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
   <div class="info">
     <h3>X-Burger</h3>
     <p>Pão, hambúrguer artesanal, queijo e molho da casa</p>
-    <strong>R$ 21</strong>
+    <strong>R$ 21,00</strong>
+
     <div class="qtd">
       <button onclick="diminuir('X-Burger')">−</button>
       <span id="qtd-X-Burger">1</span>
       <button onclick="aumentar('X-Burger')">+</button>
     </div>
+
     <button onclick="addComQtd('X-Burger',21)">Adicionar</button>
   </div>
 </div>
 
+<!-- X-SALADA -->
+<div class="produto">
+  <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
+  <div class="info">
+    <h3>X-Salada</h3>
+    <p>Pão, hambúrguer, alface, tomate, queijo e maionese</p>
+    <strong>R$ 18,00</strong>
+
+    <div class="qtd">
+      <button onclick="diminuir('X-Salada')">−</button>
+      <span id="qtd-X-Salada">1</span>
+      <button onclick="aumentar('X-Salada')">+</button>
+    </div>
+
+    <button onclick="addComQtd('X-Salada',18)">Adicionar</button>
+  </div>
+</div>
+
+<!-- BATATA -->
 <div class="produto">
   <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5">
   <div class="info">
     <h3>Batata frita</h3>
-    <p>Porção crocante</p>
-    <strong>R$ 20</strong>
+    <p>Porção de batata crocante com sal especial</p>
+    <strong>R$ 20,00</strong>
+
     <div class="qtd">
       <button onclick="diminuir('Batata frita')">−</button>
       <span id="qtd-Batata frita">1</span>
       <button onclick="aumentar('Batata frita')">+</button>
     </div>
+
     <button onclick="addComQtd('Batata frita',20)">Adicionar</button>
   </div>
 </div>
 
+<!-- CARRINHO -->
 <div class="carrinho">
   <h3>Carrinho</h3>
   <ul id="lista"></ul>
   <strong>Total: R$ <span id="total">0</span></strong>
 </div>
 
+<h3>Seus dados</h3>
 <input id="nome" placeholder="Nome">
 <input id="rua" placeholder="Rua">
 <input id="numero" placeholder="Número">
 <input id="bairro" placeholder="Bairro">
 <input id="comp" placeholder="Complemento">
-<textarea id="obs" placeholder="Observações"></textarea>
+<textarea id="obs" rows="3" placeholder="Observações do pedido (ex: sem cebola)"></textarea>
 
 <select id="pagamento">
   <option>Dinheiro</option>
@@ -176,11 +219,19 @@ function render() {
 }
 
 function enviar() {
-  let msg = `🍔 NOVO PEDIDO\nNome: ${nome.value}\nPagamento: ${pagamento.value}\n\n`;
+  let msg = `🍔 NOVO PEDIDO\n\n`;
+  msg += `Nome: ${nome.value}\n`;
+  msg += `Endereço: ${rua.value}, ${numero.value} - ${bairro.value}\n`;
+  msg += `Complemento: ${comp.value}\n`;
+  msg += `Pagamento: ${pagamento.value}\n`;
+  msg += `Observações: ${obs.value || "Nenhuma"}\n\nPedido:\n`;
+
   for (let item in carrinho) {
     msg += `- ${item} (${carrinho[item].qtd}x)\n`;
   }
+
   msg += `\nTotal: R$ ${total}`;
+
   window.open("https://wa.me/5534999060948?text=" + encodeURIComponent(msg));
 }
 </script>
