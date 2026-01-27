@@ -98,7 +98,14 @@ input, select {
     <h3>X-Burger</h3>
     <p>Pão, hambúrguer artesanal, queijo e molho da casa</p>
     <strong>R$ 21,00</strong>
-    <button onclick="add('X-Burger',21)">Adicionar</button>
+
+    <div class="qtd">
+      <button onclick="diminuir('X-Burger')">−</button>
+      <span id="qtd-X-Burger">1</span>
+      <button onclick="aumentar('X-Burger')">+</button>
+    </div>
+
+    <button onclick="addComQtd('X-Burger',21)">Adicionar</button>
   </div>
 </div>
 
@@ -108,17 +115,31 @@ input, select {
     <h3>X-Salada</h3>
     <p>Pão, hambúrguer, alface, tomate, queijo e maionese</p>
     <strong>R$ 18,00</strong>
-    <button onclick="add('X-Salada',18)">Adicionar</button>
+
+    <div class="qtd">
+      <button onclick="diminuir('X-Salada')">−</button>
+      <span id="qtd-X-Salada">1</span>
+      <button onclick="aumentar('X-Salada')">+</button>
+    </div>
+
+    <button onclick="addComQtd('X-Salada',18)">Adicionar</button>
   </div>
 </div>
 
   <div class="produto">
-  <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5" alt="Batata Frita">
+  <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="X-Salada">
   <div class="info">
-    <h3>Batata Frita</h3>
+    <h3>Batata frita</h3>
     <p>Porção de batata crocante com sal especial</p>
-    <strong>R$ 15,00</strong>
-    <button onclick="add('Batata Frita',15)">Adicionar</button>
+    <strong>R$ 20,00</strong>
+
+    <div class="qtd">
+      <button onclick="diminuir('Batata frita')">−</button>
+      <span id="qtd-Batata frita">1</span>
+      <button onclick="aumentar('Batata frita')">+</button>
+    </div>
+
+    <button onclick="addComQtd('Batata frita',20)">Adicionar</button>
   </div>
 </div>
 
