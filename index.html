@@ -19,27 +19,6 @@ header {
   text-align: center;
 }
 
-.categorias {
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  background: #fff;
-  overflow-x: auto;
-}
-
-.categorias button {
-  padding: 10px 16px;
-  border-radius: 25px;
-  border: none;
-  background: #eee;
-  font-weight: bold;
-}
-
-.categorias button.ativa {
-  background: #d32f2f;
-  color: white;
-}
-
 .container {
   padding: 15px;
 }
@@ -47,7 +26,7 @@ header {
 .produto {
   background: white;
   margin-bottom: 15px;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -58,7 +37,15 @@ header {
 }
 
 .info {
-  padding: 12px;
+  padding: 10px;
+}
+
+button {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
 }
 
 .qtd {
@@ -72,21 +59,15 @@ header {
   width: 30px;
   height: 30px;
   font-size: 18px;
-}
-
-button {
-  background: #d32f2f;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
+  background: #ddd;
+  color: #000;
 }
 
 .carrinho {
   background: white;
-  padding: 12px;
-  border-radius: 12px;
-  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
 }
 
 .carrinho ul {
@@ -96,25 +77,28 @@ button {
 
 .carrinho li {
   background: #f9f9f9;
-  padding: 10px;
   border-radius: 8px;
+  padding: 10px;
   margin-bottom: 10px;
 }
 
 .item-top {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .controls {
   display: flex;
+  align-items: center;
   gap: 8px;
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
 .controls button {
   background: #ddd;
   color: #000;
+  padding: 4px 8px;
 }
 
 .remove {
@@ -124,23 +108,24 @@ button {
 
 .total-box {
   margin-top: 10px;
-  padding: 12px;
+  padding: 10px;
   background: #e8f5e9;
   border-radius: 8px;
-  text-align: center;
   font-size: 18px;
+  text-align: center;
 }
 
 input, select, textarea {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 8px;
+  margin-bottom: 8px;
 }
 
 .finalizar {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   background: green;
+  color: white;
   font-size: 16px;
 }
 </style>
@@ -153,140 +138,64 @@ input, select, textarea {
   <p>
     Faça seu pedido online <br>
     Horário de funcionamento: 18:00 às 23:00 <br>
-    Escolha seu lanche, coloque no carrinho e envie pelo WhatsApp
+    Escolha seu lanche, coloque no carrinho, <br>
+    preencha as informações e nos mande no WhatsApp
   </p>
 </header>
 
-<div class="categorias">
-  <button class="ativa" onclick="filtrar('hamburguer',this)">🍔 Hambúrgueres</button>
-  <button onclick="filtrar('batata',this)">🍟 Batatas</button>
-  <button onclick="filtrar('massa',this)">🍝 Massas</button>
-  <button onclick="filtrar('bebida',this)">🥤 Bebidas</button>
-</div>
-
 <div class="container">
 
-<!-- HAMBÚRGUERES -->
-<div class="produto hamburguer">
+<!-- X-BURGER -->
+<div class="produto">
   <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
   <div class="info">
     <h3>X-Burger</h3>
     <p>Pão, hambúrguer artesanal, queijo e molho da casa</p>
     <strong>R$ 21,00</strong>
+
     <div class="qtd">
       <button onclick="diminuir('X-Burger')">−</button>
       <span id="qtd-X-Burger">1</span>
       <button onclick="aumentar('X-Burger')">+</button>
     </div>
+
     <button onclick="addComQtd('X-Burger',21)">Adicionar</button>
   </div>
 </div>
 
-<div class="produto hamburguer">
+<!-- X-SALADA -->
+<div class="produto">
   <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
   <div class="info">
     <h3>X-Salada</h3>
     <p>Pão, hambúrguer, alface, tomate, queijo e maionese</p>
     <strong>R$ 18,00</strong>
+
     <div class="qtd">
       <button onclick="diminuir('X-Salada')">−</button>
       <span id="qtd-X-Salada">1</span>
       <button onclick="aumentar('X-Salada')">+</button>
     </div>
+
     <button onclick="addComQtd('X-Salada',18)">Adicionar</button>
   </div>
 </div>
 
-<!-- BATATAS -->
-<div class="produto batata">
+<!-- BATATA -->
+<div class="produto">
   <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5">
   <div class="info">
-    <h3>Batata frita tradicional</h3>
-    <p>Batata crocante, porção individual</p>
-    <strong>R$ 25,00</strong>
-    <div class="qtd">
-      <button onclick="diminuir('Batata Tradicional')">−</button>
-      <span id="qtd-Batata Tradicional">1</span>
-      <button onclick="aumentar('Batata Tradicional')">+</button>
-    </div>
-    <button onclick="addComQtd('Batata Tradicional',25)">Adicionar</button>
-  </div>
-</div>
+    <h3>Batata-frita</h3>
+    <p>Porção de batata crocante com sal especial</p>
+    <strong>R$ 20,00</strong>
 
-<div class="produto batata">
-  <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086">
-  <div class="info">
-    <h3>Batata completa</h3>
-    <p>Batata frita, cheddar, bacon e molho especial</p>
-    <strong>R$ 45,00</strong>
     <div class="qtd">
-      <button onclick="diminuir('Batata Completa')">−</button>
-      <span id="qtd-Batata Completa">1</span>
-      <button onclick="aumentar('Batata Completa')">+</button>
+      <button onclick="diminuir('Batata-frita')">−</button>
+      <span id="qtd-Batata-frita">1</span>
+      <button onclick="aumentar('Batata-frita')">+</button>
     </div>
-    <button onclick="addComQtd('Batata Completa',45)">Adicionar</button>
-  </div>
-</div>
 
-<!-- MASSAS -->
-<div class="produto massa">
-  <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e">
-  <div class="info">
-    <h3>Macarrão na chapa</h3>
-    <p>Macarrão salteado na chapa com temperos da casa</p>
-    <strong>R$ 25,00</strong>
-    <div class="qtd">
-      <button onclick="diminuir('Macarrão na Chapa')">−</button>
-      <span id="qtd-Macarrão na Chapa">1</span>
-      <button onclick="aumentar('Macarrão na Chapa')">+</button>
-    </div>
-    <button onclick="addComQtd('Macarrão na Chapa',25)">Adicionar</button>
-  </div>
-</div>
-
-<div class="produto massa">
-  <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b">
-  <div class="info">
-    <h3>Macarrão ao molho</h3>
-    <p>Macarrão ao molho vermelho artesanal</p>
-    <strong>R$ 35,00</strong>
-    <div class="qtd">
-      <button onclick="diminuir('Macarrão ao Molho')">−</button>
-      <span id="qtd-Macarrão ao Molho">1</span>
-      <button onclick="aumentar('Macarrão ao Molho')">+</button>
-    </div>
-    <button onclick="addComQtd('Macarrão ao Molho',35)">Adicionar</button>
-  </div>
-</div>
-
-<!-- BEBIDAS -->
-<div class="produto bebida">
-  <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
-  <div class="info">
-    <h3>Coca-Cola lata</h3>
-    <p>350ml gelada</p>
-    <strong>R$ 5,00</strong>
-    <div class="qtd">
-      <button onclick="diminuir('Coca Lata')">−</button>
-      <span id="qtd-Coca Lata">1</span>
-      <button onclick="aumentar('Coca Lata')">+</button>
-    </div>
-    <button onclick="addComQtd('Coca Lata',5)">Adicionar</button>
-  </div>
-</div>
-
-<div class="produto bebida">
-  <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10">
-  <div class="info">
-    <h3>Coca-Cola 1 litro</h3>
-    <p>Ideal para compartilhar</p>
-    <strong>R$ 8,00</strong>
-    <div class="qtd">
-      <button onclick="diminuir('Coca 1L')">−</button>
-      <span id="qtd-Coca 1L">1</span>
-      <button onclick="aumentar('Coca 1L')">+</button>
-    </div>
-    <button onclick="addComQtd('Coca 1L',8)">Adicionar</button>
+    <button onclick="addComQtd('Batata-frita',20)">Adicionar</button>
   </div>
 </div>
 
@@ -294,14 +203,19 @@ input, select, textarea {
 <div class="carrinho">
   <h3>Carrinho</h3>
   <ul id="lista"></ul>
-  <div class="total-box">Total do pedido: R$ <span id="total">0</span></div>
+
+  <div class="total-box">
+    Total do pedido: <strong>R$ <span id="total">0</span></strong>
+  </div>
 </div>
 
+<h3>Seus dados</h3>
 <input id="nome" placeholder="Nome">
 <input id="rua" placeholder="Rua">
 <input id="numero" placeholder="Número">
 <input id="bairro" placeholder="Bairro">
-<textarea id="obs" placeholder="Ex: sem cebola, maionese à parte"></textarea>
+<input id="comp" placeholder="Complemento">
+<textarea id="obs" rows="3" placeholder="Observações do pedido (ex: sem cebola)"></textarea>
 
 <select id="pagamento">
   <option>Dinheiro</option>
@@ -315,16 +229,8 @@ input, select, textarea {
 
 <script>
 let carrinho = {};
-let quantidades = {};
 let total = 0;
-
-function filtrar(cat, btn) {
-  document.querySelectorAll('.produto').forEach(p => {
-    p.style.display = p.classList.contains(cat) ? 'block' : 'none';
-  });
-  document.querySelectorAll('.categorias button').forEach(b => b.classList.remove('ativa'));
-  btn.classList.add('ativa');
-}
+let quantidades = {};
 
 function aumentar(nome) {
   quantidades[nome] = (quantidades[nome] || 1) + 1;
@@ -340,9 +246,13 @@ function diminuir(nome) {
 
 function addComQtd(nome, preco) {
   let qtd = quantidades[nome] || 1;
-  carrinho[nome] = carrinho[nome]
-    ? { preco, qtd: carrinho[nome].qtd + qtd }
-    : { preco, qtd };
+
+  if (!carrinho[nome]) {
+    carrinho[nome] = { preco, qtd };
+  } else {
+    carrinho[nome].qtd += qtd;
+  }
+
   quantidades[nome] = 1;
   document.getElementById("qtd-" + nome).innerText = 1;
   render();
@@ -356,21 +266,24 @@ function render() {
   for (let item in carrinho) {
     let sub = carrinho[item].preco * carrinho[item].qtd;
     total += sub;
+
     lista.innerHTML += `
       <li>
         <div class="item-top">
           <strong>${item}</strong>
           <span>R$ ${sub}</span>
         </div>
+
         <div class="controls">
-          <button onclick="alterarQtd('${item}',-1)">−</button>
+          <button onclick="alterarQtd('${item}', -1)">−</button>
           <strong>${carrinho[item].qtd}</strong>
-          <button onclick="alterarQtd('${item}',1)">+</button>
+          <button onclick="alterarQtd('${item}', 1)">+</button>
           <button class="remove" onclick="removerItem('${item}')">🗑️</button>
         </div>
       </li>
     `;
   }
+
   document.getElementById("total").innerText = total;
 }
 
@@ -385,10 +298,7 @@ function removerItem(nome) {
   render();
 }
 
-function enviar() {
-  window.open("https://wa.me/5534999060948");
-}
-  <script>
+/* 🔥 FUNÇÃO ENVIAR CORRIGIDA */
 function enviar() {
   if (Object.keys(carrinho).length === 0) {
     alert("Seu carrinho está vazio.");
@@ -396,7 +306,6 @@ function enviar() {
   }
 
   let msg = "🍔 *NOVO PEDIDO – ORIGINAL BURGUER*\n\n";
-
   msg += "👤 Nome: " + nome.value + "\n";
   msg += "📍 Endereço: " + rua.value + ", " + numero.value + " - " + bairro.value + "\n";
 
@@ -406,7 +315,6 @@ function enviar() {
 
   msg += "💳 Pagamento: " + pagamento.value + "\n";
   msg += "📝 Observações: " + (obs.value.trim() || "Nenhuma") + "\n\n";
-
   msg += "🛒 *Pedido:*\n";
 
   for (let item in carrinho) {
@@ -415,10 +323,10 @@ function enviar() {
 
   msg += "\n💰 *Total: R$ " + total + "*";
 
-  let telefone = "5534999060948"; // SEU WHATSAPP
-  let url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg);
-
-  window.open(url, "_blank");
+  window.open(
+    "https://wa.me/5534999060948?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
 }
 </script>
 
