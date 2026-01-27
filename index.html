@@ -60,24 +60,27 @@ input, select {
 <body>
 
 <header>
-  <h1>Dogueria Exemplo</h1>
-  <p>Faça seu pedido online</p>
+  <h1>HAMBURGUERIA ORIGINAL BURGUER </h1>
+  <p>Faça seu pedido online 
+  horario de funcionamento das 18:00 as 23:00 
+  escolha seu lanche, coloque no carrinho, 
+  preencha as informações e nos mando no Whatsapp </p>
 </header>
 
 <div class="container">
 
   <div class="produto">
-    <span>X-Burger - R$15</span>
+    <span>X-Burger - R$20,00</span>
     <button onclick="add('X-Burger',15)">Adicionar</button>
   </div>
 
   <div class="produto">
-    <span>X-Salada - R$18</span>
+    <span>X-Salada - R$18,00</span>
     <button onclick="add('X-Salada',18)">Adicionar</button>
   </div>
 
   <div class="produto">
-    <span>Batata Frita - R$10</span>
+    <span>Batata Frita - R$15,00</span>
     <button onclick="add('Batata Frita',10)">Adicionar</button>
   </div>
 
@@ -138,7 +141,7 @@ function enviar() {
 
   msg += "\nTotal: R$" + total;
 
-  let telefone = "5599999999999"; // COLOQUE O WHATSAPP DO COMÉRCIO
+  let telefone = "5534999060948"; // COLOQUE O WHATSAPP DO COMÉRCIO
   window.open("https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg));
 }
 </script>
