@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardápio Digital</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #d32f2f;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.container {
+  padding: 15px;
+}
+.produto {
+  background: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+button {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+.carrinho {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+.finalizar {
+  width: 100%;
+  padding: 12px;
+  background: green;
+  color: white;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Dogueria Exemplo</h1>
+  <p>Faça seu pedido online</p>
+</header>
+
+<div class="container">
+
+  <div class="produto">
+    <span>X-Burger - R$15</span>
+    <button onclick="add('X-Burger',15)">Adicionar</button>
+  </div>
+
+  <div class="produto">
+    <span>X-Salada - R$18</span>
+    <button onclick="add('X-Salada',18)">Adicionar</button>
+  </div>
+
+  <div class="produto">
+    <span>Batata Frita - R$10</span>
+    <button onclick="add('Batata Frita',10)">Adicionar</button>
+  </div>
+
+  <div class="carrinho">
+    <h3>Carrinho</h3>
+    <ul id="lista"></ul>
+    <strong>Total: R$ <span id="total">0</span></strong>
+  </div>
+
+  <h3>Seus dados</h3>
+  <input id="nome" placeholder="Nome">
+  <input id="rua" placeholder="Rua">
+  <input id="numero" placeholder="Número">
+  <input id="bairro" placeholder="Bairro">
+  <input id="comp" placeholder="Complemento">
+
+  <select id="pagamento">
+    <option>Dinheiro</option>
+    <option>Pix</option>
+    <option>Cartão</option>
+  </select>
+
+  <button class="finalizar" onclick="enviar()">Enviar pedido no WhatsApp</button>
+
+</div>
+
+<script>
+let carrinho = [];
+let total = 0;
+
+function add(nome, preco) {
+  carrinho.push({nome, preco});
+  total += preco;
+  render();
+}
+
+function render() {
+  let lista = document.getElementById("lista");
+  lista.innerHTML = "";
+  carrinho.forEach(i => {
+    let li = document.createElement("li");
+    li.innerText = i.nome + " - R$" + i.preco;
+    lista.appendChild(li);
+  });
+  document.getElementById("total").innerText = total;
+}
+
+function enviar() {
+  let msg = "NOVO PEDIDO\n\n";
+  msg += "Nome: " + nome.value + "\n";
+  msg += "Endereço: " + rua.value + ", " + numero.value + " - " + bairro.value + "\n";
+  msg += "Complemento: " + comp.value + "\n";
+  msg += "Pagamento: " + pagamento.value + "\n\nPedido:\n";
+
+  carrinho.forEach(i => {
+    msg += "- " + i.nome + "\n";
+  });
+
+  msg += "\nTotal: R$" + total;
+
+  let telefone = "5599999999999"; // COLOQUE O WHATSAPP DO COMÉRCIO
+  window.open("https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg));
+}
+</script>
+
+</body>
+</html>
