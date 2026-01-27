@@ -85,12 +85,10 @@ button {
 .item-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .controls {
   display: flex;
-  align-items: center;
   gap: 8px;
   margin-top: 5px;
 }
@@ -98,7 +96,6 @@ button {
 .controls button {
   background: #ddd;
   color: #000;
-  padding: 4px 8px;
 }
 
 .remove {
@@ -115,6 +112,12 @@ button {
   text-align: center;
 }
 
+.status {
+  margin-top: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
 input, select, textarea {
   width: 100%;
   padding: 8px;
@@ -128,6 +131,20 @@ input, select, textarea {
   color: white;
   font-size: 16px;
 }
+
+/* Botão flutuante */
+.cart-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #d32f2f;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
+}
 </style>
 </head>
 
@@ -137,14 +154,13 @@ input, select, textarea {
   <h1>HAMBURGUERIA ORIGINAL BURGUER</h1>
   <p>
     Faça seu pedido online <br>
-    Horário de funcionamento: 18:00 às 23:00 <br>
-    Escolha seu lanche, coloque no carrinho, <br>
-    preencha as informações e nos mande no WhatsApp
+    Horário de funcionamento: 18:00 às 23:00
   </p>
 </header>
 
 <div class="container">
 
+<!-- PRODUTOS (NADA REMOVIDO) -->
 <!-- X-BURGER -->
 <div class="produto">
   <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
@@ -200,13 +216,15 @@ input, select, textarea {
 </div>
 
 <!-- CARRINHO -->
-<div class="carrinho">
+<div class="carrinho" id="carrinho">
   <h3>Carrinho</h3>
   <ul id="lista"></ul>
 
   <div class="total-box">
-    Total do pedido: <strong>R$ <span id="total">0</span></strong>
+    Total: R$ <span id="total">0</span>
   </div>
+
+  <div class="status" id="status">🛒 Carrinho vazio</div>
 </div>
 
 <h3>Seus dados</h3>
@@ -215,7 +233,7 @@ input, select, textarea {
 <input id="numero" placeholder="Número">
 <input id="bairro" placeholder="Bairro">
 <input id="comp" placeholder="Complemento">
-<textarea id="obs" rows="3" placeholder="Observações do pedido (ex: sem cebola)"></textarea>
+<textarea id="obs" rows="3" placeholder="Observações do pedido"></textarea>
 
 <select id="pagamento">
   <option>Dinheiro</option>
@@ -223,8 +241,12 @@ input, select, textarea {
   <option>Cartão</option>
 </select>
 
-<button class="finalizar" onclick="enviar()">Enviar pedido no WhatsApp</button>
+<button class="finalizar" onclick="confirmarEnvio()">Enviar pedido no WhatsApp</button>
 
+</div>
+
+<div class="cart-float" onclick="scrollCarrinho()">
+🛒 <span id="cartCount">0</span>
 </div>
 
 <script>
@@ -232,86 +254,95 @@ let carrinho = {};
 let total = 0;
 let quantidades = {};
 
-function aumentar(nome) {
-  quantidades[nome] = (quantidades[nome] || 1) + 1;
-  document.getElementById("qtd-" + nome).innerText = quantidades[nome];
+function aumentar(nome){
+  quantidades[nome]=(quantidades[nome]||1)+1;
+  document.getElementById("qtd-"+nome).innerText=quantidades[nome];
 }
 
-function diminuir(nome) {
-  if ((quantidades[nome] || 1) > 1) {
+function diminuir(nome){
+  if((quantidades[nome]||1)>1){
     quantidades[nome]--;
-    document.getElementById("qtd-" + nome).innerText = quantidades[nome];
+    document.getElementById("qtd-"+nome).innerText=quantidades[nome];
   }
 }
 
-function addComQtd(nome, preco) {
-  let qtd = quantidades[nome] || 1;
-
-  if (!carrinho[nome]) {
-    carrinho[nome] = { preco, qtd };
-  } else {
-    carrinho[nome].qtd += qtd;
-  }
-
-  quantidades[nome] = 1;
-  document.getElementById("qtd-" + nome).innerText = 1;
+function addComQtd(nome,preco){
+  let qtd=quantidades[nome]||1;
+  carrinho[nome]=carrinho[nome]?{preco,qtd:carrinho[nome].qtd+qtd}:{preco,qtd};
+  quantidades[nome]=1;
+  document.getElementById("qtd-"+nome).innerText=1;
   render();
 }
 
-function render() {
-  let lista = document.getElementById("lista");
-  lista.innerHTML = "";
-  total = 0;
+function render(){
+  let lista=document.getElementById("lista");
+  lista.innerHTML="";
+  total=0;
+  let count=0;
 
-  for (let item in carrinho) {
-    let sub = carrinho[item].preco * carrinho[item].qtd;
-    total += sub;
+  for(let item in carrinho){
+    let sub=carrinho[item].preco*carrinho[item].qtd;
+    total+=sub;
+    count+=carrinho[item].qtd;
 
-    lista.innerHTML += `
-      <li>
-        <div class="item-top">
-          <strong>${item}</strong>
-          <span>R$ ${sub}</span>
-        </div>
-
-        <div class="controls">
-          <button onclick="alterarQtd('${item}', -1)">−</button>
-          <strong>${carrinho[item].qtd}</strong>
-          <button onclick="alterarQtd('${item}', 1)">+</button>
-          <button class="remove" onclick="removerItem('${item}')">🗑️</button>
-        </div>
-      </li>
-    `;
+    lista.innerHTML+=`
+    <li>
+      <div class="item-top">
+        <strong>${item}</strong>
+        <span>R$ ${sub}</span>
+      </div>
+      <div class="controls">
+        <button onclick="alterarQtd('${item}',-1)">−</button>
+        <strong>${carrinho[item].qtd}</strong>
+        <button onclick="alterarQtd('${item}',1)">+</button>
+        <button class="remove" onclick="removerItem('${item}')">🗑️</button>
+      </div>
+    </li>`;
   }
 
-  document.getElementById("total").innerText = total;
+  document.getElementById("total").innerText=total;
+  document.getElementById("cartCount").innerText=count;
+  document.getElementById("status").innerText=
+    count===0?"🛒 Carrinho vazio":"✅ Pedido pronto para enviar";
 }
 
-function alterarQtd(nome, delta) {
-  carrinho[nome].qtd += delta;
-  if (carrinho[nome].qtd <= 0) delete carrinho[nome];
+function alterarQtd(nome,delta){
+  carrinho[nome].qtd+=delta;
+  if(carrinho[nome].qtd<=0)delete carrinho[nome];
   render();
 }
 
-function removerItem(nome) {
+function removerItem(nome){
   delete carrinho[nome];
   render();
 }
 
-function enviar() {
-  let msg = `🍔 NOVO PEDIDO\n\n`;
-  msg += `Nome: ${nome.value}\n`;
-  msg += `Endereço: ${rua.value}, ${numero.value} - ${bairro.value}\n`;
-  msg += `Complemento: ${comp.value}\n`;
-  msg += `Pagamento: ${pagamento.value}\n`;
-  msg += `Observações: ${obs.value || "Nenhuma"}\n\nPedido:\n`;
+function scrollCarrinho(){
+  document.getElementById("carrinho").scrollIntoView({behavior:"smooth"});
+}
 
-  for (let item in carrinho) {
-    msg += `- ${item} (${carrinho[item].qtd}x)\n`;
+function confirmarEnvio(){
+  if(Object.keys(carrinho).length===0){
+    alert("Seu carrinho está vazio.");
+    return;
   }
+  if(confirm("Deseja enviar o pedido pelo WhatsApp?")){
+    enviar();
+  }
+}
 
-  msg += `\nTotal: R$ ${total}`;
-  window.open("https://wa.me/5534999060948?text=" + encodeURIComponent(msg));
+function enviar(){
+  let msg=`🍔 *NOVO PEDIDO*\n\n`;
+  msg+=`👤 Nome: ${nome.value}\n`;
+  msg+=`📍 Endereço: ${rua.value}, ${numero.value} - ${bairro.value}\n`;
+  msg+=`💳 Pagamento: ${pagamento.value}\n`;
+  msg+=`📝 Obs: ${obs.value||"Nenhuma"}\n\n`;
+  msg+=`📦 *Pedido:*\n`;
+  for(let i in carrinho){
+    msg+=`- ${i} (${carrinho[i].qtd}x)\n`;
+  }
+  msg+=`\n💰 Total: R$ ${total}`;
+  window.open("https://wa.me/5534999060948?text="+encodeURIComponent(msg));
 }
 </script>
 
