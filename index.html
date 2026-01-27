@@ -146,24 +146,32 @@ input, select {
 
 </div>
 
-<script>
-let carrinho = [];
+let carrinho = {};
 let total = 0;
 
 function add(nome, preco) {
-  carrinho.push({nome, preco});
-  total += preco;
+  if (!carrinho[nome]) {
+    carrinho[nome] = { preco: preco, qtd: 1 };
+  } else {
+    carrinho[nome].qtd++;
+  }
   render();
 }
 
 function render() {
   let lista = document.getElementById("lista");
   lista.innerHTML = "";
-  carrinho.forEach(i => {
+  total = 0;
+
+  for (let item in carrinho) {
+    let subtotal = carrinho[item].preco * carrinho[item].qtd;
+    total += subtotal;
+
     let li = document.createElement("li");
-    li.innerText = i.nome + " - R$" + i.preco;
+    li.innerText = `${item} (${carrinho[item].qtd}x) - R$ ${subtotal}`;
     lista.appendChild(li);
-  });
+  }
+
   document.getElementById("total").innerText = total;
 }
 
@@ -175,9 +183,9 @@ function enviar() {
   msg += "Pagamento: " + pagamento.value + "\n";
 msg += "Observações: " + (obs.value || "Nenhuma") + "\n\nPedido:\n";
 
-  carrinho.forEach(i => {
-    msg += "- " + i.nome + "\n";
-  });
+  for (let item in carrinho) {
+  msg += `- ${item} (${carrinho[item].qtd}x)\n`;
+}
 
   msg += "\nTotal: R$" + total;
 
