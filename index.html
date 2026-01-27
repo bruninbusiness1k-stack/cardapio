@@ -231,7 +231,6 @@ msg += "Observações: " + (obs.value || "Nenhuma") + "\n\nPedido:\n";
 <script>
 let carrinho = {};
 let total = 0;
-
 let quantidades = {};
 
 function aumentar(nome) {
@@ -263,11 +262,38 @@ function addComQtd(nome, preco) {
   render();
 }
 
-/* funções render() e enviar() continuam abaixo */
-</script>
-  msg += "\nTotal: R$" + total;
+function render() {
+  let lista = document.getElementById("lista");
+  lista.innerHTML = "";
+  total = 0;
 
-  let telefone = "5534999060948"; // COLOQUE O WHATSAPP DO COMÉRCIO
+  for (let item in carrinho) {
+    let subtotal = carrinho[item].preco * carrinho[item].qtd;
+    total += subtotal;
+
+    let li = document.createElement("li");
+    li.innerText = `${item} (${carrinho[item].qtd}x) - R$ ${subtotal}`;
+    lista.appendChild(li);
+  }
+
+  document.getElementById("total").innerText = total;
+}
+
+function enviar() {
+  let msg = "🍔 NOVO PEDIDO\n\n";
+  msg += "Nome: " + nome.value + "\n";
+  msg += "Endereço: " + rua.value + ", " + numero.value + " - " + bairro.value + "\n";
+  msg += "Complemento: " + comp.value + "\n";
+  msg += "Pagamento: " + pagamento.value + "\n";
+  msg += "Observações: " + (obs.value || "Nenhuma") + "\n\nPedido:\n";
+
+  for (let item in carrinho) {
+    msg += `- ${item} (${carrinho[item].qtd}x)\n`;
+  }
+
+  msg += "\nTotal: R$ " + total;
+
+  let telefone = "5534999060948";
   window.open("https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg));
 }
 </script>
