@@ -388,6 +388,38 @@ function removerItem(nome) {
 function enviar() {
   window.open("https://wa.me/5534999060948");
 }
+  <script>
+function enviar() {
+  if (Object.keys(carrinho).length === 0) {
+    alert("Seu carrinho está vazio.");
+    return;
+  }
+
+  let msg = "🍔 *NOVO PEDIDO – ORIGINAL BURGUER*\n\n";
+
+  msg += "👤 Nome: " + nome.value + "\n";
+  msg += "📍 Endereço: " + rua.value + ", " + numero.value + " - " + bairro.value + "\n";
+
+  if (comp.value.trim() !== "") {
+    msg += "🏠 Complemento: " + comp.value + "\n";
+  }
+
+  msg += "💳 Pagamento: " + pagamento.value + "\n";
+  msg += "📝 Observações: " + (obs.value.trim() || "Nenhuma") + "\n\n";
+
+  msg += "🛒 *Pedido:*\n";
+
+  for (let item in carrinho) {
+    msg += "• " + item + " (" + carrinho[item].qtd + "x)\n";
+  }
+
+  msg += "\n💰 *Total: R$ " + total + "*";
+
+  let telefone = "5534999060948"; // SEU WHATSAPP
+  let url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg);
+
+  window.open(url, "_blank");
+}
 </script>
 
 </body>
