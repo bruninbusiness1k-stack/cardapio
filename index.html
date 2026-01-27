@@ -172,7 +172,8 @@ function enviar() {
   msg += "Nome: " + nome.value + "\n";
   msg += "Endereço: " + rua.value + ", " + numero.value + " - " + bairro.value + "\n";
   msg += "Complemento: " + comp.value + "\n";
-  msg += "Pagamento: " + pagamento.value + "\n\nPedido:\n";
+  msg += "Pagamento: " + pagamento.value + "\n";
+msg += "Observações: " + (obs.value || "Nenhuma") + "\n\nPedido:\n";
 
   carrinho.forEach(i => {
     msg += "- " + i.nome + "\n";
