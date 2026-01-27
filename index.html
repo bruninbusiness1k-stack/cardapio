@@ -228,6 +228,43 @@ msg += "Observações: " + (obs.value || "Nenhuma") + "\n\nPedido:\n";
   msg += `- ${item} (${carrinho[item].qtd}x)\n`;
 }
 
+<script>
+let carrinho = {};
+let total = 0;
+
+let quantidades = {};
+
+function aumentar(nome) {
+  if (!quantidades[nome]) quantidades[nome] = 1;
+  quantidades[nome]++;
+  document.getElementById("qtd-" + nome).innerText = quantidades[nome];
+}
+
+function diminuir(nome) {
+  if (!quantidades[nome]) quantidades[nome] = 1;
+  if (quantidades[nome] > 1) {
+    quantidades[nome]--;
+    document.getElementById("qtd-" + nome).innerText = quantidades[nome];
+  }
+}
+
+function addComQtd(nome, preco) {
+  let qtd = quantidades[nome] || 1;
+
+  if (!carrinho[nome]) {
+    carrinho[nome] = { preco: preco, qtd: qtd };
+  } else {
+    carrinho[nome].qtd += qtd;
+  }
+
+  quantidades[nome] = 1;
+  document.getElementById("qtd-" + nome).innerText = 1;
+
+  render();
+}
+
+/* funções render() e enviar() continuam abaixo */
+</script>
   msg += "\nTotal: R$" + total;
 
   let telefone = "5534999060948"; // COLOQUE O WHATSAPP DO COMÉRCIO
