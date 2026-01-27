@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cardápio Digital</title>
+
 <style>
 body {
   font-family: Arial, sans-serif;
   background: #f5f5f5;
   margin: 0;
-  padding: 0;
 }
 header {
   background: #d32f2f;
@@ -26,31 +26,13 @@ header {
   border-radius: 10px;
   overflow: hidden;
 }
-
 .produto img {
   width: 100%;
   height: 180px;
   object-fit: cover;
 }
-
-.produto .info {
+.info {
   padding: 10px;
-}
-
-.produto h3 {
-  margin: 5px 0;
-}
-
-.produto p {
-  font-size: 14px;
-  color: #555;
-  margin: 5px 0;
-}
-
-.produto strong {
-  display: block;
-  margin-bottom: 8px;
-}
 }
 button {
   background: #d32f2f;
@@ -59,13 +41,25 @@ button {
   padding: 8px 12px;
   border-radius: 5px;
 }
+.qtd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+}
+.qtd button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  background: #ddd;
+  color: #000;
+}
 .carrinho {
   background: white;
   padding: 10px;
   border-radius: 5px;
-  margin-top: 15px;
 }
-input, select {
+input, select, textarea {
   width: 100%;
   padding: 8px;
   margin-bottom: 8px;
@@ -77,156 +71,70 @@ input, select {
   color: white;
   font-size: 16px;
 }
-  .qtd {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-}
-
-.qtd button {
-  width: 30px;
-  height: 30px;
-  font-size: 18px;
-  background: #ddd;
-  color: #000;
-}
-
-.qtd span {
-  font-size: 16px;
-  min-width: 20px;
-  text-align: center;
-}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>HAMBURGUERIA ORIGINAL BURGUER </h1>
-  <p>Faça seu pedido online 
-  horario de funcionamento das 18:00 as 23:00 
-  escolha seu lanche, coloque no carrinho, 
-  preencha as informações e nos mando no Whatsapp </p>
+  <h1>HAMBURGUERIA ORIGINAL BURGUER</h1>
+  <p>Faça seu pedido online</p>
 </header>
 
 <div class="container">
 
-  <div class="produto">
-  <img src="https://images.unsplash.com/photo-1550547660-d9450f859349" alt="X-Burger">
+<div class="produto">
+  <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
   <div class="info">
     <h3>X-Burger</h3>
     <p>Pão, hambúrguer artesanal, queijo e molho da casa</p>
-    <strong>R$ 21,00</strong>
-
+    <strong>R$ 21</strong>
     <div class="qtd">
       <button onclick="diminuir('X-Burger')">−</button>
       <span id="qtd-X-Burger">1</span>
       <button onclick="aumentar('X-Burger')">+</button>
     </div>
-
     <button onclick="addComQtd('X-Burger',21)">Adicionar</button>
   </div>
 </div>
 
-  <div class="produto">
-  <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="X-Salada">
-  <div class="info">
-    <h3>X-Salada</h3>
-    <p>Pão, hambúrguer, alface, tomate, queijo e maionese</p>
-    <strong>R$ 18,00</strong>
-
-    <div class="qtd">
-      <button onclick="diminuir('X-Salada')">−</button>
-      <span id="qtd-X-Salada">1</span>
-      <button onclick="aumentar('X-Salada')">+</button>
-    </div>
-
-    <button onclick="addComQtd('X-Salada',18)">Adicionar</button>
-  </div>
-</div>
-
-  <div class="produto">
-  <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5" alt="X-Salada">
+<div class="produto">
+  <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5">
   <div class="info">
     <h3>Batata frita</h3>
-    <p>Porção de batata crocante com sal especial</p>
-    <strong>R$ 20,00</strong>
-
+    <p>Porção crocante</p>
+    <strong>R$ 20</strong>
     <div class="qtd">
       <button onclick="diminuir('Batata frita')">−</button>
       <span id="qtd-Batata frita">1</span>
       <button onclick="aumentar('Batata frita')">+</button>
     </div>
-
     <button onclick="addComQtd('Batata frita',20)">Adicionar</button>
   </div>
 </div>
 
-  <div class="carrinho">
-    <h3>Carrinho</h3>
-    <ul id="lista"></ul>
-    <strong>Total: R$ <span id="total">0</span></strong>
-  </div>
-
-  <h3>Seus dados</h3>
-  <input id="nome" placeholder="Nome">
-  <input id="rua" placeholder="Rua">
-  <input id="numero" placeholder="Número">
-  <input id="bairro" placeholder="Bairro">
-  <input id="comp" placeholder="Complemento">
-<textarea id="obs" placeholder="Observações do pedido (ex: sem cebola)" rows="3"></textarea>
- 
-  <select id="pagamento">
-    <option>Dinheiro</option>
-    <option>Pix</option>
-    <option>Cartão</option>
-  </select>
-
-  <button class="finalizar" onclick="enviar()">Enviar pedido no WhatsApp</button>
-
+<div class="carrinho">
+  <h3>Carrinho</h3>
+  <ul id="lista"></ul>
+  <strong>Total: R$ <span id="total">0</span></strong>
 </div>
 
-let carrinho = {};
-let total = 0;
+<input id="nome" placeholder="Nome">
+<input id="rua" placeholder="Rua">
+<input id="numero" placeholder="Número">
+<input id="bairro" placeholder="Bairro">
+<input id="comp" placeholder="Complemento">
+<textarea id="obs" placeholder="Observações"></textarea>
 
-function add(nome, preco) {
-  if (!carrinho[nome]) {
-    carrinho[nome] = { preco: preco, qtd: 1 };
-  } else {
-    carrinho[nome].qtd++;
-  }
-  render();
-}
+<select id="pagamento">
+  <option>Dinheiro</option>
+  <option>Pix</option>
+  <option>Cartão</option>
+</select>
 
-function render() {
-  let lista = document.getElementById("lista");
-  lista.innerHTML = "";
-  total = 0;
+<button class="finalizar" onclick="enviar()">Enviar pedido no WhatsApp</button>
 
-  for (let item in carrinho) {
-    let subtotal = carrinho[item].preco * carrinho[item].qtd;
-    total += subtotal;
-
-    let li = document.createElement("li");
-    li.innerText = `${item} (${carrinho[item].qtd}x) - R$ ${subtotal}`;
-    lista.appendChild(li);
-  }
-
-  document.getElementById("total").innerText = total;
-}
-
-function enviar() {
-  let msg = "NOVO PEDIDO\n\n";
-  msg += "Nome: " + nome.value + "\n";
-  msg += "Endereço: " + rua.value + ", " + numero.value + " - " + bairro.value + "\n";
-  msg += "Complemento: " + comp.value + "\n";
-  msg += "Pagamento: " + pagamento.value + "\n";
-msg += "Observações: " + (obs.value || "Nenhuma") + "\n\nPedido:\n";
-
-  for (let item in carrinho) {
-  msg += `- ${item} (${carrinho[item].qtd}x)\n`;
-}
+</div>
 
 <script>
 let carrinho = {};
@@ -234,14 +142,12 @@ let total = 0;
 let quantidades = {};
 
 function aumentar(nome) {
-  if (!quantidades[nome]) quantidades[nome] = 1;
-  quantidades[nome]++;
+  quantidades[nome] = (quantidades[nome] || 1) + 1;
   document.getElementById("qtd-" + nome).innerText = quantidades[nome];
 }
 
 function diminuir(nome) {
-  if (!quantidades[nome]) quantidades[nome] = 1;
-  if (quantidades[nome] > 1) {
+  if ((quantidades[nome] || 1) > 1) {
     quantidades[nome]--;
     document.getElementById("qtd-" + nome).innerText = quantidades[nome];
   }
@@ -249,16 +155,11 @@ function diminuir(nome) {
 
 function addComQtd(nome, preco) {
   let qtd = quantidades[nome] || 1;
-
-  if (!carrinho[nome]) {
-    carrinho[nome] = { preco: preco, qtd: qtd };
-  } else {
-    carrinho[nome].qtd += qtd;
-  }
-
+  carrinho[nome] = carrinho[nome]
+    ? { preco, qtd: carrinho[nome].qtd + qtd }
+    : { preco, qtd };
   quantidades[nome] = 1;
   document.getElementById("qtd-" + nome).innerText = 1;
-
   render();
 }
 
@@ -266,35 +167,21 @@ function render() {
   let lista = document.getElementById("lista");
   lista.innerHTML = "";
   total = 0;
-
   for (let item in carrinho) {
-    let subtotal = carrinho[item].preco * carrinho[item].qtd;
-    total += subtotal;
-
-    let li = document.createElement("li");
-    li.innerText = `${item} (${carrinho[item].qtd}x) - R$ ${subtotal}`;
-    lista.appendChild(li);
+    let sub = carrinho[item].preco * carrinho[item].qtd;
+    total += sub;
+    lista.innerHTML += `<li>${item} (${carrinho[item].qtd}x) - R$ ${sub}</li>`;
   }
-
   document.getElementById("total").innerText = total;
 }
 
 function enviar() {
-  let msg = "🍔 NOVO PEDIDO\n\n";
-  msg += "Nome: " + nome.value + "\n";
-  msg += "Endereço: " + rua.value + ", " + numero.value + " - " + bairro.value + "\n";
-  msg += "Complemento: " + comp.value + "\n";
-  msg += "Pagamento: " + pagamento.value + "\n";
-  msg += "Observações: " + (obs.value || "Nenhuma") + "\n\nPedido:\n";
-
+  let msg = `🍔 NOVO PEDIDO\nNome: ${nome.value}\nPagamento: ${pagamento.value}\n\n`;
   for (let item in carrinho) {
     msg += `- ${item} (${carrinho[item].qtd}x)\n`;
   }
-
-  msg += "\nTotal: R$ " + total;
-
-  let telefone = "5534999060948";
-  window.open("https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg));
+  msg += `\nTotal: R$ ${total}`;
+  window.open("https://wa.me/5534999060948?text=" + encodeURIComponent(msg));
 }
 </script>
 
